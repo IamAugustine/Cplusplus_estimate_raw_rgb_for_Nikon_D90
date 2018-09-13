@@ -92,7 +92,7 @@ public:
 			}
 			if (maxElementIndex != currentDiagIndex) // Switch the rows if the maximum is not the first
 			{
-				for (int i = 0; i < dimension; i++)
+				for (int i = 0; i < dimension-row; i++)
 				{
 					std::iter_swap(A.begin() + currentDiagIndex + i, A.begin() + maxElementIndex + i);
 				}

@@ -77,6 +77,8 @@ public:
 	{
 		size_t dataLength = inputSrgb.size();
 		vector<double> polyfitValues;
+
+		//std::transform(inputSrgb.begin(), inputSrgb.end(), back_inserter(polyfitValues), [] (T x)->T { return GetPolyFitVal(x); });
 		for (auto const& value : inputSrgb)
 		{
 			polyfitValues.push_back(GetPolyFitVal(value));

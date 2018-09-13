@@ -45,6 +45,8 @@ namespace Disp
 		cout << "[R-square] = \t" << eval.RSquare << endl;
 		cout << "[Max descripancy]:" << endl;
 		cout << "X = \t" << std::get<0>(eval.MaximumAbsoluteDescripancy) << "\tMeasured value = " << std::get<1>(eval.MaximumAbsoluteDescripancy) << "\tFitted value = " << std::get<2>(eval.MaximumAbsoluteDescripancy) << endl;
+		cout << "[Min descripancy]:" << endl;
+		cout << "X = \t" << std::get<0>(eval.MinimumAbsoluteDescripancy) << "\tMeasured value = " << std::get<1>(eval.MinimumAbsoluteDescripancy) << "\tFitted value = " << std::get<2>(eval.MinimumAbsoluteDescripancy) << endl;
 		cout << "===============================" << endl;
 	}
 }
