@@ -8,7 +8,6 @@ public:
 	EvaluationMetric();
 	~EvaluationMetric();
 public:
-	double StandardDeviation;
 	double RMSE;
 	double SSE;
 	double SSR;

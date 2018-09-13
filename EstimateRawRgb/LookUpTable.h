@@ -48,7 +48,16 @@ public:
 		}
 		return results;
 	}
-
+	template<typename T>
+	vector<T> GetValue2(vector<T> &x, InterpolationType interpType = InterpolationType::SegmentLinear)
+	{
+		vector<T> results;
+		for (T const& v : x)
+		{
+			results.push_back(FullSrgbDataTable[v]);
+		}
+		return results;
+	}
 public:
 	template<typename T> 
 	T GetValue(T x, InterpolationType type= InterpolationType::SegmentLinear)
@@ -146,7 +155,7 @@ private:
 			{
 				if (j != i)
 				{
-					l = l*(x - xSeq.at(j))*1.0f / (xSeq.at(i) - xSeq.at(j));
+					l *= (x - xSeq.at(j))*1.0f / (xSeq.at(i) - xSeq.at(j));
 				}
 			}
 			y += l * ySeq[i];

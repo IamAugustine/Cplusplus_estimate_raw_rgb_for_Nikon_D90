@@ -42,6 +42,9 @@
     <ClInclude Include="InfoDisplay.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\bit.linyu%40gmail.com\Cplusplus_estimate_raw_rgb_for_Nikon_D90\EstimateRawRgb\DrawData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

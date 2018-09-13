@@ -25,7 +25,7 @@ template<typename T> void PolynomialEstimation(vector<T>& srgbInput, vector<T>& 
 template<typename T> void LutEstimation(vector<T>& srgbInput, vector<T>& rawInput, vector<T>& srgbTest, vector<T>& rawOutcomes, bool isPrintData, vector<T>& rawTest)
 {
 	Lut1DInterpolation *lut = new Lut1DInterpolation(srgbInput, rawInput);
-	rawOutcomes = lut->GetValue(srgbTest);
+	rawOutcomes = lut->GetValue2(srgbTest);
 	if (isPrintData) Disp::PrintOnScreen(srgbTest, rawTest, rawOutcomes);
 	EvaluationMetric *eval = &EvaluationMetric();
 	eval->CompareTwoDataSet<double, double>(srgbTest, rawTest, rawOutcomes);
