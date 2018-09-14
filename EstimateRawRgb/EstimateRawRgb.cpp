@@ -17,20 +17,27 @@ enum EstimationMethod
 template<typename T> void PolynomialEstimation(vector<T>& srgbInput, vector<T>& rawInput, vector<T>& srgbTest, vector<T>& rawOutcomes,bool isPrintData, vector<T>& rawTest)
 {
 	InversePolynomial* polynomial = new InversePolynomial;
-	bool isLogarithmic = true;
-	if (isLogarithmic)
+	bool isSrgbLogarithmic = false;
+	bool isRawRgbLogarithmic = true;
+	if (isRawRgbLogarithmic)
 	{
-		//std::transform(srgbInput.begin(), srgbInput.end(), srgbInput.begin(), [](T x)->double {return log(x); });
 		std::transform(rawInput.begin(), rawInput.end(), rawInput.begin(), [](T x)->double {return log(x); });
-		//std::transform(srgbTest.begin(), srgbTest.end(), srgbTest.begin(), [](T x)->double {return log(x); });
+	}
+	if (isSrgbLogarithmic)
+	{
+		std::transform(srgbInput.begin(), srgbInput.end(), srgbInput.begin(), [](T x)->double {return log(x); });
+		std::transform(srgbTest.begin(), srgbTest.end(), srgbTest.begin(), [](T x)->double {return log(x); });
 	}
 	int polynomialOrder = 3;
 	polynomial->TrainingProcess<double>(rawInput, srgbInput, polynomialOrder);
 	rawOutcomes = polynomial->GetPolyFitVal(srgbTest);
-	if (isLogarithmic)
+	if (isRawRgbLogarithmic)
 	{
-		//std::transform(srgbTest.begin(), srgbTest.end(), srgbTest.begin(), [](T x)->double {return exp(x); });
 		std::transform(rawOutcomes.begin(), rawOutcomes.end(), rawOutcomes.begin(), [](T x)->double {return exp(x); });
+	}
+	if (isSrgbLogarithmic)
+	{
+		std::transform(srgbTest.begin(), srgbTest.end(), srgbTest.begin(), [](T x)->double {return exp(x); });
 	}
 	cout << polynomial->GetFittingEquation() << endl;
 	if(isPrintData) Disp::PrintOnScreen(srgbTest, rawTest, rawOutcomes);
@@ -41,19 +48,26 @@ template<typename T> void PolynomialEstimation(vector<T>& srgbInput, vector<T>& 
 }
 template<typename T> void LutEstimation(vector<T>& srgbInput, vector<T>& rawInput, vector<T>& srgbTest, vector<T>& rawOutcomes, bool isPrintData, vector<T>& rawTest)
 {
-	bool isLogarithmic =true;
-	if (isLogarithmic)
+	bool isSrgbLogarithmic = false;
+	bool isRawRgbLogarithmic = true;
+	if (isRawRgbLogarithmic)
 	{
-		std::transform(srgbInput.begin(), srgbInput.end(), srgbInput.begin(), [](T x)->T {return log(x); });
-		std::transform(rawInput.begin(), rawInput.end(), rawInput.begin(), [](T x)->T {return log(x); });
-		std::transform(srgbTest.begin(), srgbTest.end(), srgbTest.begin(), [](T x)->T {return log(x); });
+		std::transform(rawInput.begin(), rawInput.end(), rawInput.begin(), [](T x)->double {return log(x); });
+	}
+	if (isSrgbLogarithmic)
+	{
+		std::transform(srgbInput.begin(), srgbInput.end(), srgbInput.begin(), [](T x)->double {return log(x); });
+		std::transform(srgbTest.begin(), srgbTest.end(), srgbTest.begin(), [](T x)->double {return log(x); });
 	}
 	Lut1DInterpolation *lut = new Lut1DInterpolation(srgbInput, rawInput);
 	rawOutcomes = lut->GetValue(srgbTest);
-	if (isLogarithmic)
+	if (isRawRgbLogarithmic)
 	{
-		std::transform(srgbTest.begin(), srgbTest.end(), srgbTest.begin(), [](T x)->T {return exp(x); });
-		std::transform(rawOutcomes.begin(), rawOutcomes.end(), rawOutcomes.begin(), [](T x)->T {return exp(x); });
+		std::transform(rawOutcomes.begin(), rawOutcomes.end(), rawOutcomes.begin(), [](T x)->double {return exp(x); });
+	}
+	if (isSrgbLogarithmic)
+	{
+		std::transform(srgbTest.begin(), srgbTest.end(), srgbTest.begin(), [](T x)->double {return exp(x); });
 	}
 	if (isPrintData) Disp::PrintOnScreen(srgbTest, rawTest, rawOutcomes);
 	EvaluationMetric *eval = &EvaluationMetric();
@@ -66,7 +80,7 @@ int main()
 	std::string trainingData = "CCDT_Chart.txt";
 	std::string testingData = "CCSG_Chart.txt";	
 	bool isPrintInputData = false;
-	bool isPrintEstData = true;
+	bool isPrintEstData = false;
 	vector<double> rawR, rawG, rawB;
 	vector<double> srgbR, srgbG, srgbB;
 	vector<double> testRawR, testRawG, testRawB;
